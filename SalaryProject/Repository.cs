@@ -26,26 +26,35 @@ namespace SalaryProject
         /// </summary>
         /// <param name="name"></param>
         /// <param name="position"></param>
-        public void AddNewUser(string name, string position)
+        public void AddNewUser()
         {
-            switch (position)
+            char key = 'д';
+            do
             {
-                case "руководитель":
-                    UserDb.Add(new Manager(name));
-                    break;
-                case "сотрудник":
-                    UserDb.Add(new Employee(name));
-                    break;
-                case "фрилансер":
-                    UserDb.Add(new Freelancer(name));
-                    break;
-                default:
-                    Console.WriteLine("Такая роль не предусмотрена штатным распиманием!");
-                    break;
-            }
-                
-
-
+                Console.WriteLine();
+                Console.WriteLine("Введите имя нового сотрудника:");
+                string nameNewUser = Console.ReadLine();
+                Console.WriteLine("Введите роль нового сотрудника");
+                string positionNewUser = Console.ReadLine();
+                switch (positionNewUser)
+                {
+                    case "руководитель":
+                        UserDb.Add(new Manager(nameNewUser));
+                        break;
+                    case "сотрудник":
+                        UserDb.Add(new Employee(nameNewUser));
+                        break;
+                    case "фрилансер":
+                        UserDb.Add(new Freelancer(nameNewUser));
+                        break;
+                    default:
+                        Console.WriteLine("Такая роль не предусмотрена штатным распиманием!");
+                        break;
+                }
+                Console.WriteLine();
+                Console.WriteLine("Продолжить ввод новых сотрудников? (н/д)");
+                key = Console.ReadKey(true).KeyChar;
+            } while (char.ToLower(key) == 'д');
         }
 
         /// <summary>
@@ -57,6 +66,45 @@ namespace SalaryProject
             {
                 Console.WriteLine($"{item.Name}, {item.Position}");
             }
+        }
+
+        /// <summary>
+        /// Возвращает индекс сотрудника в базе,если таковой будет найден. В противном случае, возвращает -1
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public int FindIndex(string name)
+        {
+            for (int i = 0; i < UserDb.Count; i++)
+            {
+                if (UserDb[i].Name == name)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        public void ActionUser(string position, int number)
+        {
+            switch (position)
+            {
+                case "руководитель":
+                    if (number == 1) AddNewUser();
+                    break;
+                case "сотрудник":
+                    
+                    break;
+                case "фрилансер":
+                    
+                    break;
+                default:
+                    Console.WriteLine("Такая роль не предусмотрена штатным распиманием!");
+                    break;
+            }
+            Console.WriteLine();
+
         }
     }
 }

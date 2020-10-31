@@ -20,5 +20,11 @@ namespace SalaryProject
         {
             return $"{Name}, {Position}";
         }
+
+        /// <summary>
+        /// Вывод функицонала сотрудника на экран 
+        /// </summary>
+        public virtual void PrintScreen() { }
+
     }
 }

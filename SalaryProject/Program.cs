@@ -12,45 +12,12 @@ namespace SalaryProject
         static void Main(string[] args)
         {
             Repository db = new Repository();
-            Console.WriteLine("Дорый день!");
-            Console.Write("Введите своё имя: ");
-            string name = Console.ReadLine();
+            SerializeDb sdb = new SerializeDb();
 
-            // Здесь будет алгоритм поиска
+            // Загрузка списка сотрудников из .CSV
+            db.UserDb = sdb.ReadUser();
 
-            if (name == "админ")
-            {
-                Console.WriteLine($"Здравствуйте, {name}!");
-                Console.WriteLine("Ваша роль: {руководитель}");
-                Console.WriteLine("Выбирите желаемое действие:");
-                Console.WriteLine("(1). Добавить сотрудника");
-                Console.WriteLine("(2). Посмотреть отчёт по всем сотрудникам");
-                Console.WriteLine("(3). Посмотреть отчет по конкретному сотруднику");
-                Console.WriteLine("(4). Добавить часы работы");
-                Console.WriteLine("(5). Выход из программы");
-            }
-
-            Console.WriteLine();
-
-            // Обработчик "(1). Добавить сотрудника"
-            int number = Convert.ToInt32(Console.ReadLine());
-            if (number == 1)
-            {
-                char key = 'д';
-                do
-                {
-                    Console.WriteLine();
-                    Console.WriteLine("Введите имя нового сотрудника:");
-                    string nameNewUser = Console.ReadLine();
-                    Console.WriteLine("Введите роль нового сотрудника");
-                    string positionNewUser = Console.ReadLine();
-                    db.AddNewUser(nameNewUser, positionNewUser);
-                    Console.WriteLine();
-                    Console.WriteLine("Продолжить ввод новых сотрудников? (н/д)");
-                    key = Console.ReadKey(true).KeyChar;
-                } while (char.ToLower(key) == 'д');
-            }
-
+            #region Вывод списка сотрудников на экран
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine("//------------------------------------------------//");
@@ -58,16 +25,72 @@ namespace SalaryProject
             Console.WriteLine("//------------------------------------------------//");
             db.PrintUsersDb();
             Console.WriteLine("//------------------------------------------------//");
+            #endregion
 
             Console.ReadLine();
 
-            using (StreamWriter sw = new StreamWriter("dataUser.csv", true, Encoding.Unicode))
+            Console.WriteLine("Дорый день!");
+
+            int index; // индекс сотрудника в базе
+            string name; // имя сотрудника, которое вводит пользователь
+
+            // Ввод имени и поиск пользователя в базе по имени
+            do
             {
-                foreach (var item in db.UserDb)
+                Console.Write("Введите своё имя: ");
+                name = Console.ReadLine();
+                name = name.ToLower();
+
+                index = db.FindIndex(name);
+
+                // Поиск пользователя в базе
+                if (index >= 0)
                 {
-                    sw.WriteLine(item);
+                    Console.WriteLine();
+                    Console.WriteLine($"Здравствуйте, {db.UserDb[index].Name}!");
+                    Console.WriteLine($"Ваша роль: {db.UserDb[index].Position}");
+                    Console.WriteLine();
+                    db.UserDb[index].PrintScreen();
                 }
-            }
+                else if (name == "админ")
+                {
+                    Console.WriteLine($"Здравствуйте, Администратор!");
+                    Console.WriteLine("Выбирите желаемое действие:");
+                    Console.WriteLine("(1). Добавить сотрудника");
+                    Console.WriteLine("(2). Посмотреть отчёт по всем сотрудникам");
+                    Console.WriteLine("(3). Посмотреть отчет по конкретному сотруднику");
+                    Console.WriteLine("(4). Добавить часы работы");
+                    Console.WriteLine("(5). Выход из программы");
+                    index = 6;
+                }
+                else
+                {
+                    Console.WriteLine("Такой пользователь не найден!");
+                    Console.WriteLine();
+                }
+
+            } while (index < 0);
+
+            Console.WriteLine();
+
+            int number = Convert.ToInt32(Console.ReadLine());
+
+            db.ActionUser(db.UserDb[index].Position, number);
+
+            #region Вывод списка сотрудников на экран
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("//------------------------------------------------//");
+            Console.WriteLine("Список всех сотрудников:");
+            Console.WriteLine("//------------------------------------------------//");
+            db.PrintUsersDb();
+            Console.WriteLine("//------------------------------------------------//");
+            #endregion
+
+            Console.ReadLine();
+
+            // Сохранение списка сотрудников в .CSV
+            sdb.SaveUser(db.UserDb);
         }
     }
 }
