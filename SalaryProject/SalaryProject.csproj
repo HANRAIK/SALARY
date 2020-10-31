@@ -43,10 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Employee.cs" />
-    <Compile Include="Freelancer.cs" />
-    <Compile Include="Manager.cs" />
-    <Compile Include="Person.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="Users\Employee.cs" />
+    <Compile Include="Users\Freelancer.cs" />
+    <Compile Include="Users\Manager.cs" />
+    <Compile Include="Users\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

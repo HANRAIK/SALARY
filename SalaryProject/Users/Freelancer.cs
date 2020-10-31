@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SalaryProject
 {
-    class Freelancer : Person
+    class Freelancer : User
     {
         public Freelancer(string name): base(name)
         {
-
+            Position = "фрилансер";
         }
     }
 }
