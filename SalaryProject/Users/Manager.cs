@@ -22,12 +22,15 @@ namespace SalaryProject
         /// </summary>
         public override void PrintScreen()
         {
+            Console.WriteLine("-------------------------------------------------------------------------");
             Console.WriteLine("Выбирите желаемое действие:");
+            Console.WriteLine("-------------------------------------------------------------------------");
             Console.WriteLine("(1). Добавить сотрудника");
             Console.WriteLine("(2). Посмотреть отчёт по всем сотрудникам");
             Console.WriteLine("(3). Посмотреть отчет по конкретному сотруднику");
             Console.WriteLine("(4). Добавить часы работы");
             Console.WriteLine("(5). Выход из программы");
+            Console.WriteLine("-------------------------------------------------------------------------");
         }
 
         public override double GetSalary(double workTime)

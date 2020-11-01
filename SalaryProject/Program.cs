@@ -24,11 +24,13 @@ namespace SalaryProject
             #region Вывод списка сотрудников на экран
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("//------------------------------------------------//");
+            Console.WriteLine("-------------------------------------------------------------------------");
             Console.WriteLine("Список всех сотрудников:");
-            Console.WriteLine("//------------------------------------------------//");
+            Console.WriteLine("-------------------------------------------------------------------------");
             db.PrintUsersDb();
-            Console.WriteLine("//------------------------------------------------//");
+            Console.WriteLine("-------------------------------------------------------------------------");
+            Console.WriteLine();
+            Console.WriteLine();
             #endregion
 
             Console.WriteLine("Дорый день!");
@@ -81,12 +83,17 @@ namespace SalaryProject
                 // Номер команды, которую выбирает пользователь
                 number = Convert.ToInt32(Console.ReadLine());
 
+                if ((db.UserDb[index].Position == "сотрудник" || db.UserDb[index].Position == "фрилансер") && number == 3)
+                {
+                    break;
+                }
+
                 // Выполнение команды, которую выбрал пользователь
                 if (index == 6) // если зашёл админ
                 {
-                    db.ActionUser("руководитель", number);
+                    db.ActionUser(name, "руководитель", number);
                 }
-                else db.ActionUser(db.UserDb[index].Position, number); // если зашёл любой, кроме админа
+                else db.ActionUser(name, db.UserDb[index].Position, number); // если зашёл любой, кроме админа
 
                 if (number != 5) db.UserDb[index].PrintScreen();
             } while (number != 5);
@@ -101,8 +108,6 @@ namespace SalaryProject
             //db.PrintUsersDb();
             //Console.WriteLine("//------------------------------------------------//");
             #endregion
-
-            Console.ReadLine();
 
             // Сохранение данных в .CSV
             sdb.SaveUser(db.UserDb);
