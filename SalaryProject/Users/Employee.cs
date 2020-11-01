@@ -27,5 +27,20 @@ namespace SalaryProject
             Console.WriteLine("(2). Добавить свои отработанные часы работы (вы можете добавлять часы задним числом");
             Console.WriteLine("(3). Выход из программы");
         }
+
+        public override int GetSalary(int workTime)
+        {
+            int salary;
+            if (workTime > 160)
+            {
+                int overTime = workTime - 160;
+                salary = 120_000 + (overTime / 160 * 40_000);
+            }
+            else
+            {
+                salary = workTime / 160 * 120_000;
+            }
+            return salary;
+        }
     }
 }

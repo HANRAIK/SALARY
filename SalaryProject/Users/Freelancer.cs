@@ -31,5 +31,11 @@ namespace SalaryProject
 
             Console.WriteLine("(3). Выход из программы");
         }
+
+        public override int GetSalary(int workTime)
+        {
+            int salary = workTime * 1000;
+            return salary;
+        }
     }
 }

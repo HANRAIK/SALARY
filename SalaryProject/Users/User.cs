@@ -29,5 +29,7 @@ namespace SalaryProject
         /// Вывод функицонала сотрудника на экран 
         /// </summary>
         public virtual void PrintScreen() { }
+
+        public virtual int GetSalary(int workTime) { return 0; }
     }
 }

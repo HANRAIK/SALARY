@@ -30,5 +30,20 @@ namespace SalaryProject
             Console.WriteLine("(5). Выход из программы");
         }
 
+        public override int GetSalary(int workTime)
+        {
+            int salary;
+            if (workTime > 160)
+            {
+                int overTime = workTime - 160;
+                salary = 200_000 + (overTime / 160 * 20_000); 
+            }
+            else
+            {
+                salary = workTime / 160 * 200_000;
+            }
+            return salary;
+        }
+
     }
 }
