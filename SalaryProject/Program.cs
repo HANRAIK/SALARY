@@ -13,9 +13,13 @@ namespace SalaryProject
         {
             Repository db = new Repository();
             SerializeDb sdb = new SerializeDb();
+            //Report report = new Report();
 
-            // Загрузка списка сотрудников из .CSV
+            // Загрузка данных из .CSV
             db.UserDb = sdb.ReadUser();
+            db.ReportUser.ManagerReport = sdb.ReadReport("руководитель");
+            db.ReportUser.EmployeeReport = sdb.ReadReport("сотрудник");
+            db.ReportUser.FreelancerReport = sdb.ReadReport("фрилансер");
 
             #region Вывод списка сотрудников на экран
             Console.WriteLine();
@@ -27,8 +31,6 @@ namespace SalaryProject
             Console.WriteLine("//------------------------------------------------//");
             #endregion
 
-            Console.ReadLine();
-
             Console.WriteLine("Дорый день!");
 
             int index; // индекс сотрудника в базе
@@ -39,7 +41,7 @@ namespace SalaryProject
             {
                 Console.Write("Введите своё имя: ");
                 name = Console.ReadLine();
-                name = name.ToLower();
+                //name = name.ToLower();
 
                 index = db.FindIndex(name);
 
@@ -73,9 +75,15 @@ namespace SalaryProject
 
             Console.WriteLine();
 
+            // Номер команды, которую выбирает пользователь
             int number = Convert.ToInt32(Console.ReadLine());
 
-            db.ActionUser(db.UserDb[index].Position, number);
+            // Выполнение команды, которую выбрал пользователь
+            if (index == 6) // если зашёл админ
+            {
+                db.ActionUser("руководитель", number);
+            }
+            else db.ActionUser(db.UserDb[index].Position, number); // если зашёл любой, кроме админа
 
             #region Вывод списка сотрудников на экран
             Console.WriteLine();
@@ -89,8 +97,11 @@ namespace SalaryProject
 
             Console.ReadLine();
 
-            // Сохранение списка сотрудников в .CSV
+            // Сохранение данных в .CSV
             sdb.SaveUser(db.UserDb);
+            sdb.SaveReport(db.ReportUser.ManagerReport, "руководитель");
+            sdb.SaveReport(db.ReportUser.EmployeeReport, "сотрудник");
+            sdb.SaveReport(db.ReportUser.FreelancerReport, "фрилансер");
         }
     }
 }

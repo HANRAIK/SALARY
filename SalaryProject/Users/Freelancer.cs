@@ -8,6 +8,10 @@ namespace SalaryProject
 {
     class Freelancer : User
     {
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="name"></param>
         public Freelancer(string name): base(name)
         {
             Position = "фрилансер";

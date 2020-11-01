@@ -8,6 +8,10 @@ namespace SalaryProject
 {
     class Manager : User
     {
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="name"></param>
         public Manager (string name): base(name)
         {
             Position = "руководитель";
@@ -25,5 +29,6 @@ namespace SalaryProject
             Console.WriteLine("(4). Добавить часы работы");
             Console.WriteLine("(5). Выход из программы");
         }
+
     }
 }

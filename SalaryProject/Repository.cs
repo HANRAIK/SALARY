@@ -13,12 +13,15 @@ namespace SalaryProject
         /// </summary>
         public List<User> UserDb { get; set; }
 
+        public Report ReportUser { get; set; }
+
         /// <summary>
         /// Конструктор
         /// </summary>
         public Repository()
         {
             UserDb = new List<User>();
+            ReportUser = new Report();
         }
 
         /// <summary>
@@ -86,12 +89,39 @@ namespace SalaryProject
             return -1;
         }
 
+        /// <summary>
+        /// Выбор действия сотрудника
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="number"></param>
         public void ActionUser(string position, int number)
         {
+            string name;
+            string comment;
+            int time;
+            DateTime date;
+
             switch (position)
             {
                 case "руководитель":
-                    if (number == 1) AddNewUser();
+                    if (number == 1) AddNewUser();  // добавление нового пользователя
+                    if (number == 4)                // добавление времени любому сотрудниу  
+                    {
+                        Console.WriteLine("Введите имя сотрудника, которому хотите добавить время");
+                        name = Console.ReadLine();
+                        Console.WriteLine();
+                        if (FindIndex(name) >= 0)
+                        {
+                            Console.WriteLine($"Введите дату на которую Вы хотите добавить отработанные часы. Сегодня: {DateTime.Now.ToShortDateString()}");
+                            date = Convert.ToDateTime(Console.ReadLine());
+                            Console.WriteLine("Введите количество отработанных часов:");
+                            time = Convert.ToInt32(Console.ReadLine());
+                            Console.WriteLine("Введите комментарий:");
+                            comment = Console.ReadLine();
+
+                            ReportUser.AddReport(date, name, UserDb[FindIndex(name)].Position, time, comment);
+                        }
+                        else Console.WriteLine("Такой сотрудник не найден в базе!");                    }
                     break;
                 case "сотрудник":
                     

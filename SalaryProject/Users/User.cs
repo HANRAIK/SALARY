@@ -11,6 +11,10 @@ namespace SalaryProject
         public string Name { get; set; }
         public string Position { get; set; }
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="name"></param>
         public User(string name)
         {
             Name = name;
@@ -25,6 +29,5 @@ namespace SalaryProject
         /// Вывод функицонала сотрудника на экран 
         /// </summary>
         public virtual void PrintScreen() { }
-
     }
 }
