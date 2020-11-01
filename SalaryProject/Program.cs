@@ -75,24 +75,31 @@ namespace SalaryProject
 
             Console.WriteLine();
 
-            // Номер команды, которую выбирает пользователь
-            int number = Convert.ToInt32(Console.ReadLine());
-
-            // Выполнение команды, которую выбрал пользователь
-            if (index == 6) // если зашёл админ
+            int number;
+            do
             {
-                db.ActionUser("руководитель", number);
-            }
-            else db.ActionUser(db.UserDb[index].Position, number); // если зашёл любой, кроме админа
+                // Номер команды, которую выбирает пользователь
+                number = Convert.ToInt32(Console.ReadLine());
+
+                // Выполнение команды, которую выбрал пользователь
+                if (index == 6) // если зашёл админ
+                {
+                    db.ActionUser("руководитель", number);
+                }
+                else db.ActionUser(db.UserDb[index].Position, number); // если зашёл любой, кроме админа
+
+                if (number != 5) db.UserDb[index].PrintScreen();
+            } while (number != 5);
+
 
             #region Вывод списка сотрудников на экран
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine("//------------------------------------------------//");
-            Console.WriteLine("Список всех сотрудников:");
-            Console.WriteLine("//------------------------------------------------//");
-            db.PrintUsersDb();
-            Console.WriteLine("//------------------------------------------------//");
+            //Console.WriteLine();
+            //Console.WriteLine();
+            //Console.WriteLine("//------------------------------------------------//");
+            //Console.WriteLine("Список всех сотрудников:");
+            //Console.WriteLine("//------------------------------------------------//");
+            //db.PrintUsersDb();
+            //Console.WriteLine("//------------------------------------------------//");
             #endregion
 
             Console.ReadLine();

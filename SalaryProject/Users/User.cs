@@ -30,6 +30,6 @@ namespace SalaryProject
         /// </summary>
         public virtual void PrintScreen() { }
 
-        public virtual int GetSalary(int workTime) { return 0; }
+        public virtual double GetSalary(double workTime) { return 0; }
     }
 }

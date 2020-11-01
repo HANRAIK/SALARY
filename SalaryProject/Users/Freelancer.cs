@@ -32,9 +32,9 @@ namespace SalaryProject
             Console.WriteLine("(3). Выход из программы");
         }
 
-        public override int GetSalary(int workTime)
+        public override double GetSalary(double workTime)
         {
-            int salary = workTime * 1000;
+            double salary = workTime * 1000;
             return salary;
         }
     }
