@@ -38,26 +38,31 @@ namespace SalaryProject
                 Console.WriteLine();
                 Console.Write("Введите имя нового сотрудника: ");
                 string nameNewUser = Console.ReadLine();
-                Console.Write("Введите роль нового сотрудника: ");
-                string positionNewUser = Console.ReadLine();
-                switch (positionNewUser)
+                if (FindIndex(nameNewUser) == -1)
                 {
-                    case "руководитель":
-                        UserDb.Add(new Manager(nameNewUser));
-                        break;
-                    case "сотрудник":
-                        UserDb.Add(new Employee(nameNewUser));
-                        break;
-                    case "фрилансер":
-                        UserDb.Add(new Freelancer(nameNewUser));
-                        break;
-                    default:
-                        Console.WriteLine("Такая роль не предусмотрена штатным распиманием!");
-                        break;
+                    Console.Write("Введите роль нового сотрудника: ");
+                    string positionNewUser = Console.ReadLine();
+                    switch (positionNewUser)
+                    {
+                        case "руководитель":
+                            UserDb.Add(new Manager(nameNewUser));
+                            break;
+                        case "сотрудник":
+                            UserDb.Add(new Employee(nameNewUser));
+                            break;
+                        case "фрилансер":
+                            UserDb.Add(new Freelancer(nameNewUser));
+                            break;
+                        default:
+                            Console.WriteLine("Такая роль не предусмотрена штатным распиманием!");
+                            break;
+                    }
                 }
+                else Console.WriteLine("Сотрудник с таким именем уже существует в базе!");
                 Console.WriteLine();
                 Console.Write("Продолжить ввод новых сотрудников? (н/д) ");
                 key = Console.ReadKey(true).KeyChar;
+                Console.WriteLine();
             } while (char.ToLower(key) == 'д');
         }
 
@@ -251,7 +256,7 @@ namespace SalaryProject
             Console.WriteLine($"Введите период за который необходимо сформировать отчёт. Сегодня: {DateTime.Now.ToShortDateString()}");
             Console.Write($"Введите начальную дату: ");
             DateTime dateStart = Convert.ToDateTime(Console.ReadLine());
-            Console.Write($"Введите конечную дату :");
+            Console.Write($"Введите конечную дату : ");
             DateTime dateStop = Convert.ToDateTime(Console.ReadLine());
 
             Console.WriteLine();

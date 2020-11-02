@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.Services.WebApi;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -81,21 +82,46 @@ namespace SalaryProject
             do
             {
                 // Номер команды, которую выбирает пользователь
-                number = Convert.ToInt32(Console.ReadLine());
+                //number = Convert.ToInt32(Console.ReadLine());
 
-                if ((db.UserDb[index].Position == "сотрудник" || db.UserDb[index].Position == "фрилансер") && number == 3)
+                string Str = Console.ReadLine();
+                bool isNum = int.TryParse(Str, out number);
+
+                if (isNum)
                 {
-                    break;
+                    // действие если строка - число
+
+                    if ((db.UserDb.Count >= index) && (db.UserDb[index].Position == "сотрудник" || db.UserDb[index].Position == "фрилансер") && number == 3)
+                    {
+                        break;
+                    }
+
+                    // Выполнение команды, которую выбрал пользователь
+                    if (index == 6) // если зашёл админ
+                    {
+                        db.ActionUser(name, "руководитель", number);
+                    }
+                    else db.ActionUser(name, db.UserDb[index].Position, number); // если зашёл любой, кроме админа
+
+                    if (number != 5 && index != 6) db.UserDb[index].PrintScreen();
+                    else if (number != 6)
+                    {
+                        Console.WriteLine("Выбирите желаемое действие:");
+                        Console.WriteLine("(1). Добавить сотрудника");
+                        Console.WriteLine("(2). Посмотреть отчёт по всем сотрудникам");
+                        Console.WriteLine("(3). Посмотреть отчет по конкретному сотруднику");
+                        Console.WriteLine("(4). Добавить часы работы");
+                        Console.WriteLine("(5). Выход из программы");
+                    }
+
+                }
+                else
+                {
+                    // действие если строка - не число
+                    Console.Write("Вы ввели не число! Введите корректный номер команды: ");
                 }
 
-                // Выполнение команды, которую выбрал пользователь
-                if (index == 6) // если зашёл админ
-                {
-                    db.ActionUser(name, "руководитель", number);
-                }
-                else db.ActionUser(name, db.UserDb[index].Position, number); // если зашёл любой, кроме админа
-
-                if (number != 5) db.UserDb[index].PrintScreen();
+              
             } while (number != 5);
 
 
